@@ -1,0 +1,123 @@
+Inheritance:
+# Inheritence is of three type:
+# 1. Single Level
+# 2. Multi Level
+# 3. Multiple 
+
+class A:
+
+    def __init__(self):
+        print("Init of A")
+        
+    def feature1(self):
+        print("Feature 1 from Class A")
+    
+    def feature2(self):
+        print("Feature 2 from Class A")
+        
+# Single level (class A is parent/super-class, class B is child/sub-class)
+class B(A):
+    
+    def __init__(self):
+        #Calls init method of A. Try to comment this line and see what happens.
+        super().__init__() 
+        print("Init of B")
+        
+    def feature3(self):
+        print("Feature 3 from Class B")
+
+b1 = B()
+b1.feature1(), b1.feature2(), b1.feature3()
+    
+    Output: 
+    # Init of A (It is called only when super() function is used)
+    # Init of B
+    # Feature 1 from Class A
+    # Feature 2 from Class A
+    # Feature 3 from Class B
+
+# Multi-Level (C inherits from both B and A)
+class C(B):
+    #This doesn't have init of its own. Hence it calls init from class B.
+    def feature4(self):
+        print("Feature 4 from Class C")
+        
+c1 = C()
+c1.feature1(), c1.feature2(), c1.feature3(), c1.feature4()
+    
+    Output:
+    # Init of A
+    # Init of B
+    # Feature 1 from Class A
+    # Feature 2 from Class A
+    # Feature 3 from Class B
+    # Feature 4 from Class C
+
+class D():
+    def feature5(self):
+        print("Feature 5 from Class D")
+
+# Multiple (Class E inherits from 2 classes : A and E have init, D doesn't have init)
+class E(A,D):
+    def __init__(self):
+        print("Init of E")
+
+    def feature6(self):
+        print("Feature 6 from Class E")
+        
+e1 = E()
+e1.feature1(), e1.feature2(), e1.feature5(), e1.feature6()   
+    
+    Output:
+    # Init of E
+    # Feature 1 from Class A
+    # Feature 2 from Class A
+    # Feature 5 from Class D
+    # Feature 6 from Class E
+
+Note: Since D has its init method, it doesn't call A's init. 
+If the function is as follows:
+# Multiple (Class E inherits from 2 classes : A and E have init with super(), D doesn't have init)
+class E(A,D):
+    def __init__(self):
+        super().__init__()
+        print("Init of E")
+
+    def feature6(self):
+        print("Feature 6 from Class E")
+
+    Output:
+    # Init of A
+    # Init of E
+    # Feature 1 from Class A
+    # Feature 2 from Class A
+    # Feature 5 from Class D
+    # Feature 6 from Class E
+
+#Multiple (Class E inherits from 2 classes : A doesn't have init and D and E have init with super())
+    Output:
+    # Init of D
+    # Init of E
+    # Feature 1 from Class A
+    # Feature 2 from Class A
+    # Feature 5 from Class D
+    # Feature 6 from Class E
+
+#Multiple (Class E inherits from 2 classes : A, D and E have init with super())
+    Output:
+    # Init of A
+    # Init of E
+    # Feature 1 from Class A
+    # Feature 2 from Class A
+    # Feature 5 from Class D
+    # Feature 6 from Class E
+Note: By default, the MRO (Method resolution order) is left to right. Hence in the above case,
+class A's init method is called though A and D have init methods
+
+#Multiple (Class E inherits from 2 classes : A and E don't have init, D has init)
+    Output:
+    # Init of D
+    # Feature 1 from Class A
+    # Feature 2 from Class A
+    # Feature 5 from Class D
+    # Feature 6 from Class E
