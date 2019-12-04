@@ -1,0 +1,32 @@
+Classification:
+Generations Based:
+    1. Low Level:
+        a. Machine Level (first gen)
+        b. Assembly Level (second gen)
+
+    2. High Level:
+    (Paradigms of programming languages)
+        a. Imperative: (third gen)
+        (How to do a task: Procedures)
+            >Procedural
+            >Object Oriented Programming (OOP) (fourth gen)
+        b. Declarative: (third gen)
+        (What to do: Non-Procedural)
+            >Funcational
+            >Logical
+        c. Problem Oriented 
+            >Numerical
+            >Symbolic
+            >Publishing 
+
+Type Conversions:
+    1. Weak typing (Implicit type conversions)
+    2. Strong typing (Does not allow data types conversion implicitly)
+
+Runtime Types:
+    1. Static and Compiled (Types checked before runtime: Code is translated prior to runtime)
+    2. Dynamic and Interpreted (Types arent't checked until execution: Code is translated during execution)
+
+
+Reference:
+https://en.wikipedia.org/wiki/Programming_paradigms

@@ -1,0 +1,182 @@
+Object-oriented Programming
+
+Analogies: 
+In a factory manufacturing vehicles, there is a design for a vehicle model and several units of the same design are manufactured using this design.
+A CLASS : A design (blueprint)
+An OBJECT : Each unit(vehicle) built for the given design(Class). Also called as an INSTANCE.
+
+A vehicle has ATTRIBUTES (data/variables) such as identification, fuel configuration, transmission types (auto, manual) and METHODS (functions/behaviour) such as 
+steering (left/right).
+
+There are different types of attributes:
+1. Instance (specific to an instance/object as if we make changes in one object, doesn't affect the changes in the other object)
+2. Class (Static) (specific to a class and shared by all class objects. Any update and changes are reflected for all the objects pertaining to that class)
+3. Dynamic
+
+There are diiferent types of methods:
+1. Class (It works with cls as an argument (class variables) and a decorater @classmethod so as not to pass cls)
+2. Instance (It works with objects (class variables))
+3. Static (It is not related to class or instance variables)
+Note: In attributes, class and static methods where the same but in methods, they are considered different
+
+Accessor methods (Getter) helps you fetch values of an object while mutator methods (Setter) allows us to modify the values of the object.
+
+The requirements (seating capacity, mode of travel) and availability of parts can be considered to be as an initial set up required to build a vehicle.
+This process of creating a vehicle object of a class vehicle is INSTANTIATION. It is done with special methods (constructor) __init__(self). It is used to define variables
+during object creation.
+
+Self is the object referencing on which method is called (first argument). It is mentioned while defining a method.
+
+CODE SNIPPETS (Run in Jupyter Notebook)
+
+#In-built classes are already defined and the classes we defined are user defined.
+
+    #In built class of integers type
+    num = 10
+    print(type(num))
+
+        #Output : <class 'int'>
+
+    #A user defined class of vehicles type
+    class Vehicle:
+        def __init__(self):
+            print("This is vehicle class: init")
+
+        def config(self):
+            print("Car, Electric, Tesla, Model 3")
+
+    car1 = Vehicle()
+    print(type(car1))
+    Vehicle.config(car1)
+
+        # Output : <class '__main__.Vehicle'> (The type of car1 is class Vehicle)
+        Car, Electric, Tesla, Model 3 (car1.config() gives the same result)
+
+
+#Understand how each vehicle object is bound to its attributes. Take a look at constructor and self here.
+    class Vehicle:
+        #Class attribute(variable) in Class namespace (Namespace is an area to create and store variable)
+        min_speed = 0
+
+        #Object Creation done by the special method __init__ with instance variables (Instance namespace)
+            def __init__(self, vehicle_type, max_seating, fuel_type, brand):
+                self.vehicle_type = vehicle_type
+                self.max_seating = max_seating
+                self.fuel_type = fuel_type
+                self.brand = brand
+                self.default_safety = 'high'
+                self.user_details = self.User_Details()
+                
+        # Instance method
+            def config(self):
+                print("the vehile is:",self.brand, self.max_seating, self.fuel_type, self.vehicle_type)
+                
+        # Comparing any two vehicle types     
+            def compare(self,other):
+                return True if self.vehicle_type == other.vehicle_type else False
+            
+        # Fetches the brand of the vehicle (getter/accessor method)
+            def get_brand(self):
+                return self.brand
+            
+        # Sets the safety levels of the vehicle (setter/mutator method)
+            def set_safety(self, value):
+                self.safety = value
+                print("The safety is set to",self.safety)
+                
+        # Fetches the speed info of the vehicle and is spevific to the class Vehicle
+            @classmethod
+            def speed_info(cls):
+                return cls.min_speed
+
+        # Gives information on the class Vehicle 
+            @staticmethod
+            def class_info():
+                print("This is a class that is related to vehicle requirements and specifications sold to a user")
+        
+        def show(self):
+                print("The vehicle is:", self.vehicle_type)
+                self.user_details.show()
+              
+        #Inner Class User_details within Outer class Vehicle
+        class User_Details:
+
+            def __init__(self):
+                self.name = 'Raksha'
+                self.age = 25
+                self.gender = 'Female'
+                
+            def show(self):
+                print("The user details are:", self.name, self.age, self.gender)
+
+    car1 = Vehicle('car', '5 seater', 'electric', 'Tesla')
+    car1.config()
+
+    bike1 = Vehicle('bike','1 seater', 'electric','Solex')
+    bike1.config()
+
+        #Output : The vehile is Tesla 5 seater electric car
+        The vehile is Solex 1 seater electric bike
+
+    # All the objects are created in Heap memory. These lines below give the addresses of the objects. This size of the object depends on number of attributes(variables) and size of these attributes.
+    # The memory size and allocation is taken care of by the constructor. The self acts as a pointer to the object it is referring to currently.
+    print(id(car1))
+    print(id(bike1))
+
+        #Output : 2207956668712
+                2207956671008
+
+    #Here self is pointed to car1 (an object/instance) and bike1 (another object/instance) is the argument 'other' in the method compare. If the vehicle types match
+    #the vehicle types are same and return True else returns False
+    car1.compare(bike1)
+
+        #Output : False
+
+    #The class variables can be accessed as follows:
+    car1.min_speed, bike1.min_speed, Vehicle.min_speed
+
+        #Output : (0,0,0)
+
+    #Instance variables work as follows:
+    print("Before:", car1.default_safety, bike1.default_safety)
+    #Note: default_safety attribute of the bike instance is changed to medium 
+    bike1.default_safety = 'medium-high'
+    print("After:",car1.default_safety, bike1.default_safety)
+
+        #Output : Before: high high
+            After: high medium-high
+
+
+    #Methods discussion of getter and setter:
+    car1.get_brand(), bike1.get_brand()
+
+        #Output : ('Tesla', 'Solex')
+
+    bike1.set_safety('high')
+
+        #Output : The safety is set to high (Note: It was previously medium-high)
+
+    #Class method using decorator
+    car1.speed_info() (same result for Vehicle.speed_info)
+
+        #Output : 0 (Note if we don't use a decorator @classmethod, we get an error)
+
+    #Static method using decorators
+    Vehicle.class_info() (same result for car1.class_info)
+
+        #Output : This is a class that is related to vehicle requirements and specifications sold to a user
+
+    #Inner Class
+    user1 = Vehicle.User_Details()
+    user1.show()
+
+        #Output : The user details are: Raksha 25 Female
+
+    car1.show()
+
+        #Output : The vehicle is: car
+            The user details are: Raksha 25 Female
+
+References:
+https://www.udemy.com/course/python-tutorials-for-by-navinreddy/
+https://realpython.com/python3-object-oriented-programming/#classes-in-python
