@@ -121,3 +121,7 @@ class A's init method is called though A and D have init methods
     # Feature 2 from Class A
     # Feature 5 from Class D
     # Feature 6 from Class E
+
+References:
+https://docs.python.org/3/tutorial/classes.html
+https://www.udemy.com/course/python-tutorials-for-by-navinreddy/

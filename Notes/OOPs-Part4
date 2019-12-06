@@ -1,0 +1,196 @@
+Polymorphism : It means the ability to appear in many forms. (ability to process objects differently depending on their data type or class)
+In python:
+1. Duck typing 
+2. Operator Overloading
+3. Method Overloading
+4. Method Overriding
+
+# Duck typing (Behaviour should match irrespective of what Object it is)
+
+    class A:
+        def __init__(self, value):
+            self.value = value
+            
+        def length(self):
+            print(len(self.value))
+        
+    class B:
+        def __init__(self, l):
+            self.l = l
+            
+        def length(self):
+            print(len(self.l))
+
+    def common_len(obj):
+        obj.length()
+
+    a = A('Name')
+    b = B([1,2,3])
+    common_len(a)
+    common_len(b)
+
+        # Output: 
+        4
+        3
+
+#Another example
+    class IDE:
+        
+        def execute(self):
+            print("Compiling")
+            print("Executing")
+            
+    class A:
+        
+        def code(self, ide):
+            ide.execute()
+            
+    ide = IDE()
+
+    a1 = A()
+    a1.code(ide)
+
+        # Output:
+        # Compiling
+        # Executing
+
+# Operator overloading
+    a = 6
+    b = 8
+    print(a + b)
+    # a and b belong to integer class that has a method called __add__()
+    print(int.__add__(a,b)) 
+    # This command below tells what are the methods defined that belongs to the class int
+    print(dir(int))
+
+        # Output:
+        # 14
+        # 14
+        # ['__abs__', '__add__', '__and__', '__bool__', '__ceil__', '__class__', '__delattr__', '__dir__', '__divmod__', '__doc__', '__eq__', 
+        '__float__', '__floor__', '__floordiv__', '__format__', '__ge__', '__getattribute__', '__getnewargs__', '__gt__', '__hash__', '__index__',
+        '__init__', '__init_subclass__', '__int__', '__invert__', '__le__', '__lshift__', '__lt__', '__mod__', '__mul__', '__ne__', '__neg__', '__new__', 
+        '__or__', '__pos__', '__pow__', '__radd__', '__rand__', '__rdivmod__', '__reduce__', '__reduce_ex__', '__repr__', '__rfloordiv__', '__rlshift__', '__rmod__',
+        '__rmul__', '__ror__', '__round__', '__rpow__', '__rrshift__', '__rshift__', '__rsub__', '__rtruediv__', '__rxor__', '__setattr__', '__sizeof__', '__str__',
+        '__sub__', '__subclasshook__', '__truediv__', '__trunc__', '__xor__', 'bit_length', 'conjugate', 'denominator', 'from_bytes', 'imag', 'numerator', 'real', 'to_bytes']
+
+    class Number:
+        
+        def __init__(self, num):
+            self.num = num
+        
+    # This method compares two numbers based on greater than 
+        def __gt__(self, other):
+            if self.num > other.num:
+                print("a1 is greater")
+            else:
+                print("a2 is greater")
+    # This method compares two numbers based on lesser than             
+        def __lt__(self, other):
+            if self.num < other.num:
+                print("a1 is lesser")
+            else:
+                print("a2 is lesser")
+
+    # This method adds two numbers 
+        def __add__(self, num):
+            add2 = self.num + num.num
+            return add2
+        
+    # Sum of 3 numbers calls for method overloading
+        def sum(self, a=None , b=None, c=None):
+            s3 = 0
+            
+            if a!=None and b!=None and c!=None:
+                s3 = a + b + c
+            elif a!=None and b!=None:
+                s3 = a + b
+            else:
+                s3 = a
+            
+            return s3
+
+    a1 = Number(10)
+    a2 = Number(12)
+
+    print(a1 > a2, a1 < a2, a1 + a2)
+
+        # Output:
+        # a2 is greater
+        # a1 is lesser
+        # None None 22 (None refers to no value returned by the method)
+
+    #Try this now to understand Polymorphism (send strings instead of integer)
+    a1 = Number('10')
+    a2 = Number('12')
+
+    print(a1 > a2, a1 < a2, a1 + a2)
+
+        # Output:
+        # a2 is greater
+        # a1 is lesser
+        # None None 1012 (None refers to no value returned by the method)
+
+    #For Method Overloading
+    print(a1.sum(3,7), a1.sum(3,7,10), a1.sum(5))
+    # Output :
+    # 10 20 5
+
+    Another Example for Method overloading:
+    class person:
+        def __init__(self):
+            self.__name = ''
+        @property
+        def name(self):
+            return self.__name
+        @name.setter
+        def name(self, value):
+            self.__name = value
+
+# @property is a decorator (function that uses another function as an argument) used. Use @[property-name].setter to call a setter method.
+Here property_name is name and @property is the getter method.
+
+    a = person()
+    a.name = 'Raksha'
+    print(a.name)
+    a.name = 'Umesh'
+    print(a.name)
+
+        # Output :
+        # Raksha
+        # Umesh
+
+#Method Overriding
+#Case 1:
+    class A:
+        
+        def show(self):
+            print("Belongs to class A")
+
+    class B(A):
+        
+        def show(self):
+            print("Belongs to class B")
+
+    b1 = B()
+    b1.show()
+        # Output : Belongs to class B
+
+#Case 2:
+    class A:
+        
+        def show(self):
+            print("Belongs to class A")
+
+    class B(A):
+        
+        pass
+
+    b2 = B()
+    b2.show()
+        # Output : Belongs to class A
+
+References:
+https://www.pythonforthelab.com/blog/duck-typing-or-how-to-check-variable-types/
+https://python-intro.readthedocs.io/en/latest/polymorphism.html
+https://www.tutorialsteacher.com/python/property-decorator
+https://www.udemy.com/course/python-tutorials-for-by-navinreddy/

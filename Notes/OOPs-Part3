@@ -1,0 +1,80 @@
+#Encapsulation: It is a property of binding data and behaviors within an unit. 
+It provides privilages on how we can access variables and methods. The purpose is to avoid random modifications in data.
+They are as follows:
+1. Private Variables/Methods
+2. Protected Variables/Methods
+3. Public Variables/Methods
+
+In private, it is represented by __ (double underscore). Neither be accessed outside the class nor by any base class.
+In protected, it is represented by _ (single underscore). Cannot be accessed outside the class but can be accessed from within the class.
+In public, it is represented without any underscores. Accessed outside or from within a class.
+
+    # Creating a Base class 
+    class A: 
+        def __init__(self): 
+            self.a = "Public"
+            self._b = "Protected"
+            self.__c = "Private"
+
+    # Creating a derived class 
+    class B(A): 
+        def __init__(self): 
+            
+            super().__init__()  
+            print("Calling members from B class: ") 
+            print(self.a, self._b) 
+            
+    # Driver code 
+    obj1 = A()
+    print(obj1.a, obj1._b)
+    obj1._b ="Safe"
+    print(obj1.a, obj1._b)
+    # print(obj1.__c)
+
+        # Output:
+        # Public Protected
+        # Public Safe
+
+    obj2 = B()
+    obj2._b ="Safe"
+    print(obj2.a, obj2._b)
+    # print(obj2.__c)
+
+        # Output:
+        # Calling members from B class: 
+        # Public Protected
+        # Public Safe
+
+NOTE: The public and protected can be accessed as discussed.
+
+How can we access private variables ? _<className>__<attributeName>
+
+How can we access private methods ? _<className>__<methodName>
+    class priv:
+
+        def __init__(self): 
+            self.__age = '25'
+
+        def A(self):
+            return 'public should be seen'
+        
+        def _B(self):
+            return 'protected can be seen'
+        
+        def __C(self):
+            return 'private cannot be seen'
+    
+        #Outside class    
+        Check = priv()
+        # public should be seen (Public Method)
+        print(Check.A())
+        # protected can be seen (Protected Method)
+        print(Check._B()) 
+        # private cannot be seen (Private Method access) _<className>__<attributeName>
+        print(Check._priv__C()) 
+        # 25 (Private variable)
+        print(Check._priv__age)
+
+References:
+https://pythonspot.com/encapsulation/
+https://medium.com/@manjuladube/encapsulation-abstraction-35999b0a3911
