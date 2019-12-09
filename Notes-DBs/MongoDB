@@ -1,0 +1,110 @@
+MONGODB
+
+Installation (On Ubuntu)
+    sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv
+    2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5
+    echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu
+
+    xenial/mongodb-org/3.6 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-
+    org-3.6.list
+
+    sudo apt-get update
+    sudo apt-get install -y mongodb-org
+    sudo systemctl start mongod
+    sudo systemctl status mongod
+    sudo systemctl enable mongod
+
+Run the shell
+    mongo
+    show dbs : Shows all dbs
+    use db <name> : Select a specific db
+    show collections : Show collections withing selected db
+    db.<collectionName> : Select a collection to view
+
+Try thr following in Robo3T :
+Insert :
+    db.getCollection('employee').insertOne(
+       { item: "canvas", qty: 100, tags: ["cotton"], size: { h: 28, w: 35.5, uom: "cm" } }
+    )
+
+    db.getCollection('employee').insertMany([
+    { item: "journal", qty: 25, tags: ["blank", "red"], size: { h: 14, w: 21, uom: "cm" } },
+    { item: "mat", qty: 85, tags: ["gray"], size: { h: 27.9, w: 35.5, uom: "cm" } },
+    { item: "mousepad", qty: 25, tags: ["gel", "blue"], size: { h: 19, w: 22.85, uom: "cm" } }
+    ])
+
+Find:
+    SELECT * FROM employee
+    db.getCollection('employee').find({})    
+
+    SELECT * FROM employee WHERE qty = 25
+    db.getCollection('employee').find({qty:25})    
+
+    SELECT * FROM employee WHERE qty in (25,100)
+    db.getCollection('employee').find({qty:{$in:[25.0,100.0]}})    
+
+    //$gt (greater than), $gte(greater than equal to), $lt(lesser than), $lte(lesser than equal to), $ne(not equal)
+    SELECT * FROM employee WHERE status = "A" AND qty < 30
+    db.getCollection('employee').find({ status: "A", qty: { $lt: 30 } })   
+     
+    SELECT * FROM employee WHERE status = "A" OR qty < 30
+    db.getCollection('employee').find({ $or: [{status: "A"}, {qty: { $lt: 30 }}]})
+
+    SELECT * FROM employee WHERE status = "A" AND ( qty < 30 OR item LIKE "p%")   
+    db.getCollection('employee').find({status:'A', $or: [{item: /^p/}, {qty: { $lt: 30 }}]})   
+
+    //Order doesn't matter and matches with all tags
+    db.getCollection('employee').find( { tags: { $all: ["red", "blank","grey"] } } )    
+
+    //Order matters while matching the tags field
+    db.getCollection('employee').find( { tags: ["red", "blank"] } )   
+
+    //Array with tags of size 3  
+    db.getCollection('employee').find( { "tags": { $size: 3 } } )    
+
+    //instock: [ { warehouse: "A", qty: 5 }, { warehouse: "C", qty: 15 } ]
+    db.getCollection('employee').find( { "instock": { warehouse: "A", qty: 5 } } )   
+
+    //Order doesn't matter and matches with all records accordingly 
+    db.getCollection('employee').find( { "instock": { $elemMatch: { qty: 5, warehouse: "A" } } } )    
+
+    //Find all records having status and a field within a nested object size
+    db.getCollection('employee').find({ status: "A" },{ "size.uom": 1 })  
+
+    //Check the records in which status field exists 
+    db.getCollection('employee').find( { status : { $exists: true } } )  
+
+    //find all documents containing “coffee shop”
+    db.getCollection('employee').find( { $text: { $search: "\"coffee shop\"" } } )
+
+    //find all stores containing “java” or “shop” but not “coffee”    
+    db.getCollection('employee').find( { $text: { $search: "java shop -coffee" } } )   
+
+    //find all stores containing any terms from the list “coffee”, “shop”, and “java”
+    db.getCollection('employee').find( { $text: { $search: "java coffee shop" } } )    
+
+Delete:
+    //Deletes all records matched with status A
+    db.getCollection('employee').deleteMany({ status : "A" })   
+
+    //Deletes first record matched with status D 
+    db.getCollection('employee').deleteOne({ status: "D" })     
+    (3.2version)  : db.getCollection('employee').remove( { status: "D" }, 1)) 
+
+    //Deletes all records 
+    db.getCollection('employee').deleteMany({})     
+    (3.2version)  : db.getCollection('employee').remove({})  
+
+Update:
+    //Add new field in all records
+    db.getCollection('employee').update({}, {$set: {"isOpen": false}}, false, true)  
+
+    //Updates first matched record with item name starting from 'p' and adds new field tags  
+    db.getCollection('employee').updateOne({item:/^p/},{$set:{'tags':["blank", "red","grey"]}},false,true) 
+
+    //Updates all records that matches with item name starting from 'p' and adds new field tags   
+    db.getCollection('employee').updateMany({item:/^p/},{$set:{'tags':["blank", "red","grey"]}},false,true)    
+
+    References:
+    https://docs.mongodb.com/guides/
+    https://blog.exploratory.io/an-introduction-to-mongodb-query-for-beginners-bd463319aa4c
