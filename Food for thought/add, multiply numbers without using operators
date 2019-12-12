@@ -1,0 +1,17 @@
+# Logic to add 2 numbers
+
+a = 5
+b = 6
+while b!=0:
+    a = a+1
+    b = b-1
+print(a,b)
+
+# Logic to multiply 2 numbers
+
+a = 2
+b = 3 
+while a != 1:
+    b+= b
+    a-= 1
+print(b)
