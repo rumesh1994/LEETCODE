@@ -1,0 +1,36 @@
+ELK Stack Components:
+    In data pipeline, the following are important:
+    1. data gathering (aggregation): helps in collecting logs from multiple sources
+    2. dat processing (translation): transforms logs into meaningful data
+    3. data storage : store data for longer duration to perform analysis 
+    Logstash and Beats together work on the first two aspects (Supports collecting logs and metrics) while storage works on the 
+
+    Beats: Data collection and ingestion to ElasticSearch or via Logstash
+    Logstash: Data aggregation and processing
+    ElasticSearch: Data indexing and storage
+    Kibana: Visualisation and Analysis (Dashboard)
+
+Note: For more complicated pipelines, security(nginx) and buffering(redis, kafka) are added.
+
+Use Cases:
+    Security Analysis/Logs
+    Search (Textual data)
+    Operations (Machines health or performance monitoring)
+    Market Insights
+
+Elastic Search(ES):
+    NoSQL, Real-time distributed anlytics engine, JSON format used for data storage, accesible from RESTful web services.
+    Main features are scalability, near real-time and schemaless
+
+Architecture of ES:
+    * Clusters are basically Databases
+    * Node ia a single instance of ES. Nodes can be considered as several machines(servers) present within these clusters 
+    * Index is the analogy for table in Databases. It has different types of documents
+    * Shards are the subdivisions in these Indices and act as independent nodes which can be stored in any node.
+    * Fields are columns within an index (table)
+    * Documents are Rows within an index (table). It is stroed in JSON format.
+
+Key concept of ES:
+    Inverted index concept where there is mapping between the a word --> documents as opposed to a document --> words
+    ES uses Apache Lucene engine to complete this task.
+
