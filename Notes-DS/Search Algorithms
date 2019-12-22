@@ -1,0 +1,38 @@
+Linear Search: Searched across the array
+
+    def linear_search(arr, element):
+        if element in arr:
+            return arr.index(element)
+
+    linear_search([2,6,8,9,32,65,12], 12), linear_search([2,6,8,9,32,65,12], 5)
+
+    #Time Complexity : O(n)
+
+Binary Search: Array divided into 2 parts
+
+    def binary_search(arr, element):
+        start = 0
+        end = len(arr) - 1
+        found = False
+
+        while start<=end and not found:
+            midpoint = (start + end)//2
+            if arr[midpoint] == element:
+                found = True
+            else:
+                if element < arr[midpoint]:
+                    end = midpoint-1
+                else:
+                    start = midpoint+1
+        if found == False:
+            midpoint = None
+        return found , midpoint
+
+    binary_search([2,6,8,9,32,65], 9)
+
+    #Time Complexity : O(log2n)
+
+There are other algorithms like ternary search where the array is divided into 3 parts. 
+
+There is another algorithm that first finds the range where the element will be in the array and then performs
+binary search. This is called as exponential search.
