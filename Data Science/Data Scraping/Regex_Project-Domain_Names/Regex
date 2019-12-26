@@ -1,0 +1,74 @@
+Regular Expression is a search pattern for text.
+
+There are some characters with special meanings which are used to write patterns. They are explained below:
+    the backslash \ (escapes a sequence of characters or signals a special sequence):
+        \d, \D, \A etc
+    the caret ^ (matches the start of text):
+        "^[Tt]he" matches only The in 'The table, the glass.'
+    the dollar sign $ (matches the end of text):
+        "at.$" matches only hat in 'This cat has a hat.'
+    the period or dot . (matches any single character except newline):
+        ".t" matches it, at in 'it is at my place.'
+    the vertical bar or pipe symbol | (matches pattern on the left or right of the pipe):
+        "cat|milk" matches if milk or cat is present in the sentence
+    the question mark ? (subpattern can be missing or it can occur exactly once):
+        "at[.]?" matches any word with the pattern 'at', optionally followed by a full stop
+    the asterisk or star * (subpattern can be missing or it can occur zero or more times)
+    the plus sign + (subpattern can be missing or it can occur one or more times):
+        "[a-z]+" means: any number of lowercase English letters.
+    the parenthesis () (used for grouping, capturing groups):
+        "(\d\d\d)-(\d\d\d-\d\d\d\d)" helps match a phone number (xxx)-(xxx-xxxx)
+    the square brackets [] (indicates a character set):
+        "[Tt]he" matches the and The in 'The lady is at the door.'
+    the curly brace {} (specifies number of occurences):
+        “x{2,3}” find xx or xxx
+
+In python, import the regex library as follows:
+    import re
+
+There are several search and find commands that can be used to search on text and patterns accordingly.
+    re.findall(pattern, string) : runs over all the lines of text and returns all matches found across the lines
+    re.search(pattern, string) : returns the first occurence matched pattern in the string
+    re.split(pattern, string) : any matched pattern in string that returns a list of strings where the splits have occurred
+    re.sub(pattern, replace, string) : any matched pattern in the string is replaced by replace arg
+    re.match(pattern,string) : returns the matched pattern only in the beginning of the string else returns None
+
+Try the following examples:
+string = 'The number 12 multiplied by 5 gives 60. Check 12 tables.'
+pattern = '\d+' # Pattern matches any number in the string
+
+FINDALL:
+    result = re.findall(pattern, string) 
+    print(result)
+        # Returns a list of all numbers found in string ['12', '5', '60', '12']
+
+SEARCH:
+    result = re.search(pattern, string) 
+    print(result.group())
+        # Returns only 12 (First match)
+
+SPLIT:
+    result = re.split(pattern, string) 
+    print(result)
+        # Returns ['The number ', ' multiplied by ', ' gives ', '. Check ', ' tables.']
+
+SUB:
+    text = "Good morning. Have a good day."
+    # Pattern matches 'Good' or 'good'
+    result = re.sub('[Gg]ood', 'Great', text)
+    print(result)
+        # Returns Great morning. Have a Great day.
+
+MATCH:
+    result = re.match('[Gg]ood', "Good morning")
+    print(result.group())
+        # Returns Good
+
+    result = re.match('[Gg]ood', "Have a good day")
+    print(result)
+        # Returns None
+
+References:
+https://docs.python.org/3.6/library/re.html
+https://www.machinelearningplus.com/python/python-regex-tutorial-examples/
+

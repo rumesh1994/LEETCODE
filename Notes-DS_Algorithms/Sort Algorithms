@@ -1,0 +1,147 @@
+Bubble Sort:
+
+    def bubbleSort(alist):
+        #Setting the range for comparison (first round: n, second round: n-1  and so on)
+        for i in range(len(alist)-1,0,-1):
+
+            for j in range(i):
+
+                #Comparing element (at index j) with the next element (at index + 1)
+                if alist[j] > alist[j+1]:
+
+                    #swapping
+                    alist[j], alist[j+1] = alist[j+1], alist[j]
+        return alist
+
+    alist = [56,22,99,11,74,44,63,85,3]
+    bubbleSort(alist)
+
+    #Time Complexity: O(n^2)
+
+Insertion Sort:
+
+    def insertionSort(arr): 
+  
+    # Traverse through the array using indices 
+    for i in range(1, len(arr)): 
+  
+        #key is element at index i
+        key = arr[i] 
+  
+        # Move elements of arr[0..i-1], that are 
+        # greater than key, to one index ahead 
+        # of their current index 
+        j = i
+        while j > 0 and key < arr[j-1] : 
+                arr[j] = arr[j-1] 
+                j -= 1
+        arr[j] = key 
+    return arr
+
+    alist = [56,22,99,11,74,44,63,85,3]
+    insertionSort(alist)
+
+    #Time Complexity: O(n^2)
+
+Selection Sort:
+
+    def selectionSort(arr):
+    
+    # Traverse through all elements in the array
+    for i in range(len(arr)): 
+
+        # Find the minimum element in remaining in the unsorted array 
+        min_index = i 
+        for j in range(i+1, len(arr)): 
+            if arr[min_index] > arr[j]: 
+                min_index = j 
+
+        # Swap the found minimum element with the element         
+        arr[i], arr[min_index] = arr[min_index], arr[i] 
+    return arr
+
+    alist = [56,22,99,11,74,44,63,85,3]
+    selectionSort(alist)
+
+    # Time Complexity: O(n^2)
+    
+Quick Sort:
+
+    def quicksort(arr):
+
+    # We define our 3 arrays
+    less = []
+    equal = []
+    greater = []
+
+    # if the length of our array is greater than 1, we perform a sort
+    if len(arr) > 1:
+        
+        # Select our pivot; It can first, last or any element
+        pivot = arr[0]
+
+        # recursively go through every element of the array
+        for x in arr:
+            if x < pivot:
+                less.append(x)
+            if x == pivot:
+                equal.append(x)
+            if x > pivot:
+                greater.append(x)
+
+        # recursively call quicksort until we have a sorted list.
+        return quicksort(less)+equal+quicksort(greater)
+
+    else:
+        return arr
+    
+    alist = [56,22,99,11,74,44,63,85,3]
+    quicksort(alist)
+
+    # Time Complexity: O(n^2)
+
+Merge Sort:
+
+    def mergesort(arr):
+        # Find the mid and obtain left and right arrays
+        if len(arr)>1:
+            mid = len(arr)//2
+            left = arr[:mid]
+            right = arr[mid:]
+            mergesort(left)
+            mergesort(right)
+        
+            i=0 #Index to iterate over left array
+            j=0 #Index to iterate over right array
+            k=0 #Index to iterate for merged array
+            
+            # Merge left and right arrays to real array
+            while i < len(left) and j < len(right):
+                if left[i] < right[j]:
+                    arr[k] = left[i]
+                    i+=1
+                else:
+                    arr[k] = right[j]
+                    j+=1
+                k+=1
+
+            # Append remaining elements in left array to real array
+            while i < len(left):
+                arr[k] = left[i]
+                i+=1
+                k+=1
+            
+            # Append remaining elements in right array to real array
+            while j < len(right):
+                arr[k] = right[j]
+                j+=1
+                k+=1
+            
+        return arr
+            
+    alist = [56,22,99,11,74,44,63,85,3]     
+    mergesort(alist)
+
+    #Time Complexity: O(nlogn)
+
+Note: Worst Case Time complexities are mentioned here.
