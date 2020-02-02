@@ -21,4 +21,19 @@ class Solution(object):
             head = head.next
         return False
 
+# Other Solution
+# class Solution(object):
+#     def hasCycle(self, head):
+#         """
+#         :type head: ListNode
+#         :rtype: bool
+#         """
+#         prev = nxt = head
+#         while nxt and nxt.next:
+#             prev = prev.next
+#             nxt = nxt.next.next
+#             if prev == nxt:
+#                 return True
+#         return False
+
         
